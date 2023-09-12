@@ -2,6 +2,7 @@ package com.github.unclecatmyself.core.bean;
 
 import com.github.unclecatmyself.bootstrap.channel.protocol.Response;
 import com.github.unclecatmyself.core.constant.Constants;
+import com.github.unclecatmyself.core.utils.DateUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,8 @@ public class InChatResponse implements Response {
     private String one;
     private String from;
     private String group;
+
+    private String msgtime;
 
     public InChatResponse loginSuccess() {
         setType(Constants.LOGIN);
@@ -50,6 +53,7 @@ public class InChatResponse implements Response {
         setType(Constants.SEND_TO);
         setFrom(token);
         setValue(value);
+        setMsgtime(DateUtils.getTime());
         return this;
     }
 
@@ -107,5 +111,13 @@ public class InChatResponse implements Response {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getMsgtime() {
+        return msgtime;
+    }
+
+    public void setMsgtime(String msgtime) {
+        this.msgtime = msgtime;
     }
 }

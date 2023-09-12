@@ -67,7 +67,7 @@ public class MessageFactory {
      * 获取指定消息的方法
      */
     public synchronized Method getMethod(String msgID) {
-        return msg2Method.get(msgID);
+        return msg2Method.get(msgID.toLowerCase());
     }
 
     /**

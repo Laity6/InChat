@@ -14,6 +14,8 @@ import com.github.unclecatmyself.core.bean.vo.SendServerVO;
 import com.github.unclecatmyself.core.constant.Constants;
 import com.github.unclecatmyself.core.constant.LogConstant;
 import com.github.unclecatmyself.core.constant.StateConstant;
+import com.github.unclecatmyself.core.utils.DateUtil;
+import com.github.unclecatmyself.core.utils.DateUtils;
 import com.github.unclecatmyself.scheduling.AsyncListener;
 import com.github.unclecatmyself.support.HandlerService;
 import com.github.unclecatmyself.core.bean.InChatResponse;
@@ -117,12 +119,14 @@ public class AbstractHandlerService extends HandlerService {
         if (webSocketChannel.hasOther(otherOne)) {
             //发送给对方--在线
             Channel other = webSocketChannel.getChannel(otherOne);
+            InChatResponse chatResponse = response.getMessage(token, value);
+            chatResponse.setMsgtime(DateUtils.getTime());
             if (other == null) {
                 //转http分布式
-                httpChannel.sendInChat(otherOne, response.getMessage(token, value));
+                httpChannel.sendInChat(otherOne, chatResponse);
             } else {
                 other.writeAndFlush(new TextWebSocketFrame(
-                        gson.toJson(response.getMessage(token, value))));
+                        gson.toJson(chatResponse)));
                 message.setOnline(Constants.TRUE);
             }
         } else {

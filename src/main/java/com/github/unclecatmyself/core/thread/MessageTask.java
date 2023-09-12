@@ -60,6 +60,7 @@ public class MessageTask implements Runnable {
         }
         //设置token
         channel.attr(SessionKey.TOKEN).set(message.getToken());
+        logger.info("token is #{} !", message.getToken());
         try {
             method.invoke(handlerService, channel, message);
         } catch (Exception e) {
